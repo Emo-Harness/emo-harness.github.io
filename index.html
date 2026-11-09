@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EmoHarness: Boosting Multimodal Emotion Understanding with Meta-Harness Evolving</title>
+  <meta name="description" content="EmoHarness runs a frozen multimodal model inside a harness of prompts, settings and verification code, and evolves that harness offline with a Builder LLM. It raises task-macro Recognition on MME-Emotion by 7.6 to 13.4 points over a single video-only call.">
+  <meta name="theme-color" content="#6a3d9a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EmoHarness: Boosting Multimodal Emotion Understanding with Meta-Harness Evolving">
+  <meta property="og:description" content="A frozen multimodal student, an evolving harness: +7.6 to +13.4 points task-macro Recognition on 5,507 MME-Emotion items.">
+  <meta property="og:url" content="https://emo-harness.github.io/">
+  <meta property="og:image" content="https://emo-harness.github.io/static/images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./static/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="./static/css/style.css?v=1">
+  <script src="./static/js/results.js?v=1" defer></script>
+  <script src="./static/js/main.js?v=1" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top" aria-label="EmoHarness, back to top">
+      <img src="./static/images/logo.png" width="32" height="32" alt="">
+      <span><span class="brand-emo">Emo</span><span class="brand-harness">Harness</span></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-controls="page-nav" aria-expanded="false">
+      <span>Menu</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <nav id="page-nav" class="page-nav" aria-label="Page sections">
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#cases">Case study</a>
+      <a href="#intentqa">IntentQA</a>
+      <a href="#limits">Limits</a>
+      <a href="#citation">Citation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="title-block">
+        <p class="wordmark">
+          <img src="./static/images/logo.png" width="76" height="76" alt="">
+          <span><span class="brand-emo">Emo</span><span class="brand-harness">Harness</span></span>
+        </p>
+        <h1>Boosting Multimodal Emotion Understanding<br class="wide-break"> with Meta-Harness Evolving</h1>
+        <p class="authors">
+          <span>Fenghai Li<sup>1</sup></span>
+          <span>Bingxuan Li<sup>1</sup></span>
+          <span>Jiawen Zhang<sup>2</sup></span>
+          <span>Yifan Shen<sup>1</sup></span>
+          <span>Jiateng Liu<sup>1</sup></span>
+          <span>Yutong Zhang<sup>3</sup></span>
+          <span>Yue Guo<sup>1</sup></span>
+        </p>
+        <p class="affiliations">
+          <span><sup>1</sup>University of Illinois Urbana-Champaign</span>
+          <span><sup>2</sup>University of California, Davis</span>
+          <span><sup>3</sup>Stanford University</span>
+        </p>
+        <div class="resource-links">
+          <a class="pill" href="./static/pdf/EmoHarness.pdf" target="_blank" rel="noopener" type="application/pdf">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>Paper</span>
+          </a>
+          <a class="pill" href="https://github.com/Emo-Harness/EmoHarness" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            <span>Code</span>
+          </a>
+          <a class="pill secondary" href="#citation">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h4v4H8.5c0 2 1 3 2.5 3.5V17c-3 0-5-2.5-5-6V8a1 1 0 0 1 1-1Zm7 0h4v4h-2.5c0 2 1 3 2.5 3.5V17c-3 0-5-2.5-5-6V8a1 1 0 0 1 1-1Z" fill="currentColor"/></svg>
+            <span>BibTeX</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-showcase">
+        <div class="hero-copy">
+          <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>Frozen student, evolving harness</p>
+          <p class="hero-idea">Better emotion reading, with the model&rsquo;s weights left untouched</p>
+          <p class="hero-caption">Small multimodal models misjudge emotion when words, voice and visual cues conflict. EmoHarness runs such a model, the <strong>student</strong>, inside a <strong>harness</strong>: the prompts, settings and verification code around its calls. What the student sees, what is said and how it sounds become numbered evidence that every answer must cite.</p>
+          <p class="hero-caption">Offline, a stronger LLM, the <strong>Builder</strong>, reads the student&rsquo;s errors and execution traces and edits the harness. Validation gates decide which edits are kept.</p>
+          <p class="property-label">What stays out of the loop</p>
+          <ul class="property-tags">
+            <li><strong>No</strong> weight updates</li>
+            <li><strong>No</strong> Builder calls at inference</li>
+            <li><strong>No</strong> evaluation items shown to the Builder</li>
+            <li><strong>No</strong> raw audio: the student reads transcript and prosody text</li>
+          </ul>
+        </div>
+
+        <figure class="case-demo" aria-labelledby="demo-title">
+          <div class="demo-head">
+            <h2 id="demo-title">One clip, conflicting cues</h2>
+            <span class="demo-tag">Selected case</span>
+          </div>
+          <p class="demo-meta">Gemma-4-E4B on a fine-grained sentiment clip, a task type held out from harness construction</p>
+          <div class="demo-question">
+            <p class="q-text">Identify the most prominent fine-grained sentiment displayed in the video.</p>
+            <p class="q-sub">One of 9 labels, from very strong negative to very strong positive <span class="chip-ref">reference: negative</span></p>
+          </div>
+          <div class="demo-frames">
+            <figure><img src="./static/images/case-frame-1.webp" width="643" height="349" alt="Speaker at 0.40 seconds, hands clasped; box A marks the clasped hands. Subtitle: It's."><figcaption>0.40 s</figcaption></figure>
+            <figure><img src="./static/images/case-frame-2.webp" width="643" height="349" alt="Speaker at 0.93 seconds with a serious face; box B marks the face. Subtitle: my form."><figcaption>0.93 s</figcaption></figure>
+            <figure><img src="./static/images/case-frame-3.webp" width="643" height="349" alt="Speaker at 1.17 seconds. Subtitle: form so."><figcaption>1.17 s</figcaption></figure>
+          </div>
+          <div class="demo-evidence">
+            <p class="ev ev-seen"><span class="ev-kind">Seen</span><span class="ev-ids"><code>v2</code><code>v3</code></span><span class="ev-text">Upright posture, clasped hands</span><span class="ev-hint">suggests neutral</span></p>
+            <p class="ev ev-said"><span class="ev-kind">Said</span><span class="ev-ids"><code>a1</code></span><span class="ev-text">&ldquo;It&rsquo;s not my form so&rdquo;</span><span class="ev-hint">suggests negative</span></p>
+          </div>
+
+          <div class="ladder" role="tablist" aria-label="Answer under each condition">
+            <button class="rung" role="tab" id="rung-video" aria-controls="step-video" aria-selected="false" tabindex="-1" data-step="video">
+              <span class="rung-name">Video</span><span class="answer wrong">neutral</span>
+            </button>
+            <button class="rung" role="tab" id="rung-audio" aria-controls="step-audio" aria-selected="false" tabindex="-1" data-step="audio">
+              <span class="rung-name">Audio</span><span class="answer wrong">weak negative</span>
+            </button>
+            <button class="rung" role="tab" id="rung-shared" aria-controls="step-shared" aria-selected="false" tabindex="-1" data-step="shared">
+              <span class="rung-name">Shared</span><span class="answer wrong">strong negative</span>
+            </button>
+            <button class="rung rung-mhe" role="tab" id="rung-mhe" aria-controls="step-mhe" aria-selected="true" tabindex="0" data-step="mhe">
+              <span class="rung-name">MHE</span><span class="answer right">negative</span>
+            </button>
+          </div>
+
+          <div class="step" role="tabpanel" id="step-video" aria-labelledby="rung-video" hidden>
+            <p class="step-head"><span class="adds">The native video only</span><span class="step-calls">1 call</span></p>
+            <ul class="notes">
+              <li class="n-ok">Clasped hands, composed posture</li>
+              <li class="n-lim">Serious face read as neutral</li>
+            </ul>
+          </div>
+          <div class="step" role="tabpanel" id="step-audio" aria-labelledby="rung-audio" hidden>
+            <p class="step-head"><span class="adds">+ transcript and prosody text</span><span class="step-calls">1 call</span></p>
+            <ul class="notes">
+              <li class="n-audio">Words read as a correction</li>
+              <li class="n-err">Delivery judged mild: weak negative</li>
+            </ul>
+          </div>
+          <div class="step" role="tabpanel" id="step-shared" aria-labelledby="rung-shared" hidden>
+            <p class="step-head"><span class="adds">+ the human-written four-call scaffold</span><span class="step-calls">4 calls</span></p>
+            <ul class="notes">
+              <li class="n-ok">Composed posture [v2, v3]</li>
+              <li class="n-err">Intensity taken from a confidence score</li>
+            </ul>
+          </div>
+          <div class="step" role="tabpanel" id="step-mhe" aria-labelledby="rung-mhe">
+            <p class="step-head"><span class="adds">+ edits evolved by GPT-5.6 Luna</span><span class="step-calls">4 calls</span></p>
+            <ul class="notes">
+              <li class="n-ok">Posture backs a &ldquo;neutral&rdquo; rival</li>
+              <li class="n-audio">Speech [a1] outweighs it</li>
+              <li class="n-ok">GPT-6.1 Sol&rsquo;s harness also answers negative</li>
+            </ul>
+          </div>
+          <div class="demo-foot">
+            <p>Selected, not representative. The student saw the clip at 2 fps; frames are subtitled with the words spoken near each one.</p>
+            <button class="replay" type="button" hidden>Replay</button>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="band" id="overview" aria-labelledby="overview-title">
+    <div class="container overview-grid">
+      <div class="overview-copy">
+        <h2 id="overview-title">Overview</h2>
+        <p class="tldr">On 5,507 MME-Emotion items, EmoHarness raises task-macro Recognition by <strong>7.6 to 13.4 points</strong> over a single video-only call, for all four students and both Builders. Most of the boost comes from supplying and organizing audio-derived evidence.</p>
+
+        <div class="decomp" aria-labelledby="decomp-title">
+          <h3 id="decomp-title">Where the boost comes from</h3>
+          <p class="decomp-note">Range across the four students (both Builders for evolved edits), task-macro Recognition, percentage points.</p>
+          <div class="decomp-axis" aria-hidden="true"><span style="--x:0">&minus;2</span><span style="--x:2">0</span><span style="--x:6">+4</span><span style="--x:10">+8</span><span style="--x:14">+12</span></div>
+          <ol class="decomp-rows">
+            <li class="d-audio" style="--lo:5.38;--hi:10.71">
+              <span class="d-label"><strong>Add transcript and prosody text</strong><span>Audio &minus; Video</span></span>
+              <span class="d-track"><span class="d-range"></span></span>
+              <span class="d-val">+5.38 to +10.71</span>
+            </li>
+            <li class="d-shared" style="--lo:-0.79;--hi:2.54">
+              <span class="d-label"><strong>Add the four-call scaffold</strong><span>Shared &minus; Audio</span></span>
+              <span class="d-track"><span class="d-range"></span></span>
+              <span class="d-val">&minus;0.79 to +2.54</span>
+            </li>
+            <li class="d-mhe" style="--lo:-0.07;--hi:0.95">
+              <span class="d-label"><strong>Add evolved edits</strong><span>MHE &minus; Shared</span></span>
+              <span class="d-track"><span class="d-range"></span></span>
+              <span class="d-val">&minus;0.07 to +0.95</span>
+            </li>
+            <li class="d-total" style="--lo:7.61;--hi:13.36">
+              <span class="d-label"><strong>EmoHarness in total</strong><span>MHE &minus; Video</span></span>
+              <span class="d-track"><span class="d-range"></span></span>
+              <span class="d-val">+7.61 to +13.36</span>
+            </li>
+          </ol>
+          <p class="decomp-note">No evolved increment survives Holm correction over eight tests.</p>
+        </div>
+
+        <details class="abstract">
+          <summary><span class="when-closed">Read the abstract</span><span class="when-open">Hide the abstract</span><svg class="chevron" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="abstract-body">
+            <p>Small multimodal models can misjudge emotion when words, voice, and visual cues conflict. We present EmoHarness, which runs such a model, the frozen student, inside a harness: the prompts, settings, and verification code around its calls. A human-written starting harness, the scaffold, numbers the student&rsquo;s visual observations, transcript, and prosody descriptions as citable evidence and has the student weigh candidate emotions against it. In Meta-Harness Evolving (MHE), a stronger LLM, the Builder, reads the student&rsquo;s errors and execution traces offline and edits the harness; static checks and validation gates decide which edits are kept, and the Builder never sees evaluation items. On 5,507 MME-Emotion items, EmoHarness raises task-macro Recognition by 7.6&ndash;13.4 points over a single video-only call for all four students and both Builders. Transcripts and prosody descriptions supply most of this boost (+5.38 to +10.71); the scaffold changes the audio-augmented call by &minus;0.79 to +2.54, partly through extra multi-label predictions, and evolved edits add at most +0.95, although no evolved increment survives Holm correction. The harness&rsquo;s emotion context also transfers to IntentQA, with small gains for three of four students, none of which survives correction. EmoHarness thus boosts small multimodal students chiefly by supplying and organizing audio-derived evidence.</p>
+          </div>
+        </details>
+      </div>
+
+      <figure class="figure-card teaser">
+        <button class="zoomable" type="button" data-full="./static/images/emo-teaser.webp" data-caption="EmoHarness at a glance. (a) A selected held-out clip (Gemma-4-E4B): posture suggests neutral, the words negative. (b) Offline, a Builder LLM edits the harness from the frozen student's failures and execution traces. (c) Task-macro Recognition contrasts.">
+          <img src="./static/images/emo-teaser.webp" width="1200" height="1920" loading="lazy" alt="Figure 1 of the paper: a selected clip with conflicting cues, the Meta-Harness Evolving loop, and the measured Recognition changes per student.">
+        </button>
+        <figcaption><strong>EmoHarness at a glance.</strong> (a) A selected held-out clip. (b) Meta-Harness Evolving: the Builder edits the harness offline; checks and validation gates promote edits over four generations. (c) Task-macro Recognition contrasts per student; whiskers are 95% intervals and the two scales differ.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section" id="method" aria-labelledby="method-title">
+    <div class="container">
+      <h2 id="method-title">How EmoHarness works</h2>
+      <p class="section-intro">A harness is a bundle of prompts, settings files and verification code. Meta-Harness Evolving builds one offline from the student&rsquo;s failures. At inference the frozen student runs the frozen harness, with no Builder in the loop.</p>
+
+      <figure class="figure-card wide">
+        <button class="zoomable" type="button" data-full="./static/images/emo-method.webp" data-caption="How Meta-Harness Evolving builds a harness and how the frozen student runs it. (a) Offline, the Builder turns the incumbent's construction failures and traces into at most four candidate edits per generation; static checks, a proposal reviewer and the validation gates promote the best candidate or retain the incumbent; after four generations the harness is frozen. (b) At inference the frozen student makes four calls (at most six with retries) around deterministic verification and a fixed controller.">
+          <img src="./static/images/emo-method.webp" width="2200" height="1467" loading="lazy" alt="Figure 2 of the paper. Top: the offline Meta-Harness Evolving loop from the incumbent harness through the diagnostic packet, Builder, candidate bundles, static checks and selection gates. Bottom: the frozen student's four calls, Observe, Propose, Review and Explain, around indexed evidence and a fixed controller.">
+        </button>
+        <figcaption><strong>Building a harness and running it.</strong> (a) Offline, the Builder turns construction failures and traces into at most four candidate edits per generation; checks and gates promote the best one or keep the incumbent. (b) At inference the frozen student makes four calls, at most six with retries, around deterministic verification and a fixed controller. Click to enlarge.</figcaption>
+      </figure>
+
+      <div class="method-grid">
+        <article>
+          <h3>At inference: four student calls around fixed code</h3>
+          <ol class="calls">
+            <li><strong>Observe</strong> extracts facial, bodily, scene and temporal cues from the video at 2 fps. Code indexes them as <code>v1</code>, <code>v2</code>, &hellip; next to transcript sentences and prosody phrases, <code>a1</code>, <code>a2</code>, &hellip;; later calls see only this text record.</li>
+            <li><strong>Propose</strong> lists candidate labels with confidences and the IDs of supporting and contradicting evidence. Code checks every ID against the record, then ranks the candidates.</li>
+            <li><strong>Review</strong> re-examines the ranked candidates and is verified the same way. A fixed controller then picks at most three labels from the allowed vocabulary.</li>
+            <li><strong>Explain</strong> writes an explanation that cannot change the labels.</li>
+          </ol>
+          <p class="fine">Audio reaches the student only as text: Whisper large-v3 transcripts and openSMILE eGeMAPSv02 features turned into descriptions such as &ldquo;high pitch&rdquo;, never into emotion labels.</p>
+        </article>
+        <article>
+          <h3>Offline: Meta-Harness Evolving</h3>
+          <p>Over four generations, the Builder (GPT-5.6 Luna or GPT-6.1 Sol) reads the incumbent&rsquo;s failures on a construction split, clustered by gold&ndash;prediction confusion and by cross-modal conflict, together with execution traces. It proposes up to four candidate harnesses per generation, each aimed at one failure cluster.</p>
+          <p>Candidates pass file-scope, schema, loadability and static-code checks and a proposal reviewer that rejects shortcuts such as forcing a label. Survivors run on a separate validation split, and one replaces the incumbent only if it clears every gate:</p>
+          <dl class="gates">
+            <div><dt>Recognition</dt><dd>higher than the incumbent&rsquo;s</dd></div>
+            <div><dt>Regression</dt><dd>loses at most 5% of validation items already solved</dd></div>
+            <div><dt>Mean calls</dt><dd>at most 4.5 student calls per item</dd></div>
+            <div><dt>Reasoning proxy</dt><dd>within 0.02 of the incumbent</dd></div>
+          </dl>
+          <p class="fine">The Builder sees neither validation scores nor gate decisions, only the resulting harness. If no candidate is ever promoted, the evolved harness is the scaffold itself.</p>
+        </article>
+      </div>
+
+      <div class="scope">
+        <div class="scope-col scope-edit">
+          <h3>The Builder may edit</h3>
+          <ul>
+            <li>Prompts for the four calls</li>
+            <li>Settings, such as how the transcript is presented</li>
+            <li>Restricted verification code</li>
+          </ul>
+        </div>
+        <div class="scope-col scope-fixed">
+          <h3>Fixed throughout</h3>
+          <ul>
+            <li>The student&rsquo;s weights</li>
+            <li>Perception tools and their cached outputs</li>
+            <li>Evidence and output schemas, and the output controller</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section band" id="results" aria-labelledby="results-title">
+    <div class="container">
+      <h2 id="results-title">Results on MME-Emotion</h2>
+      <p class="section-intro">Four students, served with vLLM at temperature zero: Qwen3-VL-8B, Qwen3-VL-4B, Qwen3.5-4B and Gemma-4-E4B. Evaluation covers 5,507 items, 2,963 in the three task types seen during construction and 2,544 in five held-out types. Recognition is scored locally against gold labels, without an LLM judge.</p>
+
+      <div class="chart-card" id="recognition-chart">
+        <div class="chart-controls">
+          <div class="segmented" role="radiogroup" aria-label="Student" data-control="student"></div>
+          <div class="segmented" role="radiogroup" aria-label="Score" data-control="metric"></div>
+        </div>
+        <p class="chart-title" id="chart-title">Task-macro Recognition (%)</p>
+        <div class="bars" role="img" aria-labelledby="chart-title" aria-describedby="chart-summary"></div>
+        <div class="bar-axis" aria-hidden="true"></div>
+        <p class="chart-note" id="chart-summary"></p>
+        <div class="chart-tooltip" role="status" hidden></div>
+        <details class="table-details">
+          <summary><span class="when-closed">Show every task type</span><span class="when-open">Hide task types</span><svg class="chevron" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="table-scroll">
+            <table class="results-table">
+              <caption>Recognition (%) per task type for the selected student. Bold marks the unique best value in each column.</caption>
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="fine">Seen types: ER-Lab, ER-Wild (lab and in-the-wild emotion recognition) and SA (sentiment analysis). Held-out types: Noise-ER, FG-ER, ML-ER (noisy, fine-grained, multi-label emotion recognition), FG-SA (fine-grained sentiment) and IR (intent recognition). FG-ER and ML-ER use recall-like Recognition. &dagger; No candidate passed the gates, so the harness equals Shared.</p>
+        </details>
+      </div>
+
+      <div class="findings">
+        <article>
+          <h3>Added evidence does most of the work</h3>
+          <p>Transcript and prosody text give every student its largest gain. Audio &minus; Video ranges from +5.38 (Qwen3.5-4B) to +10.71 points (Gemma-4-E4B), and every interval excludes zero.</p>
+        </article>
+        <article>
+          <h3>The scaffold helps two students</h3>
+          <p>Shared &minus; Audio is +2.23 for Qwen3.5-4B and +2.54 for Gemma-4-E4B, partly because the scaffold predicts more labels on multi-label tasks, which recall-like scoring rewards. For the Qwen3-VL students it is +1.32 and &minus;0.79, with intervals that include zero.</p>
+        </article>
+        <article>
+          <h3>Evolution adds little on top</h3>
+          <p>MHE &minus; Shared ranges from &minus;0.07 to +0.95 points. The largest, GPT-5.6 Luna on Qwen3-VL-4B (+0.95, 95% CI [+0.12, +1.82]), does not survive Holm correction (adjusted <i>p</i> = .192), and neither does any other contrast.</p>
+        </article>
+      </div>
+
+      <div class="split">
+        <div>
+          <h3>Transfer to held-out task types</h3>
+          <p>With one exception, held-out changes are as small as seen-type changes. MHE &minus; Shared ranges from &minus;0.16 to +0.47 points on seen types and, for seven of the eight student&ndash;Builder pairs, from &minus;0.14 to +0.28 on held-out types.</p>
+          <p>The exception is again GPT-5.6 Luna on Qwen3-VL-4B: +1.24 on held-out types, lifting held-out Recognition to 36.65, still below single-call Audio at 37.55. With seen-type gains this small, the held-out results say little about transfer beyond this pair.</p>
+        </div>
+        <figure class="figure-card">
+          <button class="zoomable" type="button" data-full="./static/images/recognition-paths.webp" data-caption="Recognition paths per student. (a) Seen- versus held-out-type macro Recognition: arrows run Video, Audio, Shared. (b) MHE minus Shared, zoomed (ticks 10 times finer); violet circle: GPT-5.6 Luna; blue square: GPT-6.1 Sol.">
+            <img src="./static/images/recognition-paths.webp" width="1100" height="1502" loading="lazy" alt="Figure 3 of the paper: seen versus held-out Recognition for each student under Video, Audio and Shared, and a zoomed view of MHE minus Shared.">
+          </button>
+          <figcaption><strong>Recognition paths per student.</strong> (a) Seen versus held-out macro Recognition, from Video through Audio to Shared. (b) MHE &minus; Shared, zoomed ten times; violet: GPT-5.6 Luna, blue: GPT-6.1 Sol.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case study -->
+  <section class="section" id="cases" aria-labelledby="cases-title">
+    <div class="container">
+      <h2 id="cases-title">What an evolved edit changes</h2>
+      <p class="section-intro">Two Gemma-4-E4B items, one where an edit evolved by GPT-5.6 Luna fixes the scaffold&rsquo;s error and one where it does not. Over all 5,507 items, this harness changes Shared&rsquo;s label set on 169 items: 46 improve, 45 worsen and 78 score the same. Cases are selected, not representative.</p>
+
+      <div class="case-tabs" role="tablist" aria-label="Case">
+        <button role="tab" id="tab-case-a" aria-controls="case-a" aria-selected="true" tabindex="0"><span class="badge ok">Success</span>Posture now tempers the intensity</button>
+        <button role="tab" id="tab-case-b" aria-controls="case-b" aria-selected="false" tabindex="-1"><span class="badge err">Failure</span>The new rule is not followed</button>
+      </div>
+
+      <div class="case-panel" role="tabpanel" id="case-a" aria-labelledby="tab-case-a">
+        <p>Shared rates a mildly negative remark as <em>strong negative</em> because a confidence score, not an observed cue, ranks that label first. With the evolved edit, the review call treats the composed posture as evidence for a neutral reading, and the harness answers the reference, <em>negative</em>.</p>
+        <figure class="figure-card wide">
+          <button class="zoomable" type="button" data-full="./static/images/case-study-a.webp" data-caption="Success: MHE fixes what Shared gets wrong. Composed posture now tempers the intensity. The edit panel quotes the rule GPT-5.6 Luna added to the review prompt, with verbatim Shared and MHE excerpts.">
+            <img src="./static/images/case-study-a.webp" width="2200" height="906" loading="lazy" alt="Case study (a): a held-out fine-grained sentiment clip. Video answers neutral, Audio weak negative, Shared strong negative, and the MHE harness negative, which matches the reference. The evolved review-prompt rule says composed posture and absence of visible affective change support a neutral reading.">
+          </button>
+          <figcaption>Each card gives one condition&rsquo;s answer (green: correct, red: wrong); lettered boxes mark the regions the cards cite; amber notes are audio-derived. The edit panel quotes the rule GPT-5.6 Luna added to the review prompt.</figcaption>
+        </figure>
+      </div>
+      <div class="case-panel" role="tabpanel" id="case-b" aria-labelledby="tab-case-b" hidden>
+        <p>Video answers the correct <em>Neutral</em>, but once the transcript of a billing complaint is added, Audio, Shared and both evolved harnesses answer <em>Frustration</em>. The Luna harness keeps Frustration even though its added rule asks it to treat neutral as a serious alternative: its explanation never names Neutral and still lists crossed arms that no sampled frame shows.</p>
+        <figure class="figure-card wide">
+          <button class="zoomable" type="button" data-full="./static/images/case-study-b.webp" data-caption="Failure: MHE keeps Shared's error. The rule written for this confusion is not followed: Neutral is never named, and Frustration stays.">
+            <img src="./static/images/case-study-b.webp" width="2200" height="948" loading="lazy" alt="Case study (b): a lab emotion-recognition clip with reference Neutral. Video answers Neutral; Audio, Shared and the MHE harness answer Frustration. The evolved rule asks to keep neutral as a serious alternative, but the trace still names Anger as the alternative.">
+          </button>
+          <figcaption>Hands rest on the armrests in all seven sampled frames, yet Shared and MHE cite crossed arms. The edit panel shows the added rule and the unchanged trace.</figcaption>
+        </figure>
+      </div>
+
+      <details class="more">
+        <summary><span class="when-closed">Show two more cases</span><span class="when-open">Hide the extra cases</span><svg class="chevron" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <figure class="figure-card wide">
+          <button class="zoomable" type="button" data-full="./static/images/case-study-appendix.webp" data-caption="Additional cases, selected, not representative. (a) Qwen3-VL-4B, FG-SA: the GPT-5.6 Luna harness reaches the reference negative; GPT-6.1 Sol's does not. (b) Qwen3-VL-8B, ER-Lab: the correct Excited fits the evolved ranking code, while the written explanation favors Happiness.">
+            <img src="./static/images/case-study-appendix.webp" width="2200" height="1224" loading="lazy" alt="Appendix case study figure with two more clips, one for Qwen3-VL-4B and one for Qwen3-VL-8B.">
+          </button>
+          <figcaption>(a) Qwen3-VL-4B, fine-grained sentiment: the GPT-5.6 Luna harness reaches the reference <em>negative</em>; GPT-6.1 Sol&rsquo;s does not. (b) Qwen3-VL-8B, lab emotion recognition: the correct <em>Excited</em> fits the evolved ranking code, while the written explanation favors <em>Happiness</em>.</figcaption>
+        </figure>
+      </details>
+    </div>
+  </section>
+
+  <!-- IntentQA -->
+  <section class="section band" id="intentqa" aria-labelledby="intentqa-title">
+    <div class="container">
+      <h2 id="intentqa-title">Emotion context on IntentQA</h2>
+      <p class="section-intro">Each evolved harness writes one emotion context per video, with the predicted emotion, alternatives and a four-step analysis, without seeing any question. The bare student then answers 2,134 IntentQA test questions on 567 videos from the frames, the frames plus transcript and prosody, or those inputs plus the emotion context.</p>
+      <div class="split">
+        <div>
+          <div class="table-scroll">
+            <table class="qa-table">
+              <caption>Question-answering accuracy (%). Bold: best per student.</caption>
+              <thead>
+                <tr><th scope="col">Input</th><th scope="col"><abbr title="Qwen3-VL-8B">VL-8B</abbr></th><th scope="col"><abbr title="Qwen3-VL-4B">VL-4B</abbr></th><th scope="col"><abbr title="Qwen3.5-4B">Q3.5</abbr></th><th scope="col"><abbr title="Gemma-4-E4B">Gemma</abbr></th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Frames</th><td>70.99</td><td>67.48</td><td><b>79.90</b></td><td>57.31</td></tr>
+                <tr><th scope="row">Audio</th><td>72.63</td><td>68.42</td><td>77.84</td><td>60.59</td></tr>
+                <tr class="row-mhe"><th scope="row">+ emotion, Luna</th><td><b>73.10</b></td><td><b>70.29</b></td><td>76.34&dagger;</td><td>61.62</td></tr>
+                <tr class="row-mhe"><th scope="row">+ emotion, Sol</th><td>72.87</td><td>69.92</td><td>76.43</td><td><b>61.95</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fine">VL-8B and VL-4B: Qwen3-VL-8B and 4B; Q3.5: Qwen3.5-4B; Gemma: Gemma-4-E4B. Luna: GPT-5.6 Luna; Sol: GPT-6.1 Sol. &dagger; Context written by the retained Shared scaffold.</p>
+          <p>Adding the emotion context raises accuracy in all six pairs for Qwen3-VL-8B, Qwen3-VL-4B and Gemma-4-E4B, by +0.23 to +1.87 points. Qwen3.5-4B loses 1.50 and 1.41 points; it also loses 2.06 points when only transcript and prosody are added.</p>
+          <p>None of the eight contrasts survives Holm correction (smallest adjusted <i>p</i> = .085). There is no length-matched control, so longer inputs rather than emotion content could explain these changes.</p>
+        </div>
+        <figure class="figure-card">
+          <button class="zoomable" type="button" data-full="./static/images/downstream-strata.webp" data-caption="Emotion context transfers to IntentQA. Accuracy change from adding the harness's emotion context to Audio. Bars: mean over 4 students and 2 Builders; dots: the 8 individual changes. The mean change is positive for every question type; none survives Holm correction.">
+            <img src="./static/images/downstream-strata.webp" width="1100" height="524" loading="lazy" alt="Figure 5 of the paper: mean accuracy change from adding emotion context, by IntentQA question type: all questions +0.4, why +0.4, how +0.3, temporal +0.8.">
+          </button>
+          <figcaption><strong>Change from adding emotion context</strong>, by question type. Bars: mean over 4 students and 2 Builders; dots: the 8 individual changes. The mean is positive for every type; none survives Holm correction.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limits -->
+  <section class="section" id="limits" aria-labelledby="limits-title">
+    <div class="container">
+      <h2 id="limits-title">Why evolved gains stay small</h2>
+      <p class="section-intro">The gates promoted six GPT-5.6 Luna edits and five GPT-6.1 Sol edits across the eight runs. What the analysis points to:</p>
+      <div class="limits-grid">
+        <article>
+          <h3>Validation gains shrink on evaluation</h3>
+          <p>Promoted edits raised validation Recognition by up to 2.54 points. Scored the same way on the 2,963 seen-type evaluation items, the seven promoted harnesses change by &minus;0.20 to +0.30. Each promotion picks the best of up to four candidates on 394 items, and three of the eleven rest on a single validation item.</p>
+        </article>
+        <article>
+          <h3>The regression gate blocks broad edits</h3>
+          <p>All twelve candidates that gained at least eight validation items (2.03 points) exceeded the 5% regression budget. The gate protects solved cases at the cost of broad edits; whether a looser gate generalizes better needs a separate test set.</p>
+        </article>
+        <article>
+          <h3>Most evolved harnesses are conservative</h3>
+          <p>Apart from GPT-5.6 Luna on Qwen3-VL-4B, which changes the label set on 21.6% of evaluation items, each evolved harness changes it on fewer than 4%.</p>
+        </article>
+        <article>
+          <h3>Edits are instructions the student may not follow</h3>
+          <p>In the failure case, the rule written for the Neutral-to-Frustration confusion is ignored. The student&rsquo;s instruction following, not only the Builder&rsquo;s proposals, can limit what edits achieve. Future gates could check that traces apply edits and that citations match the media.</p>
+        </article>
+      </div>
+      <div class="figure-pair">
+        <figure class="figure-card">
+          <button class="zoomable" type="button" data-full="./static/images/evolving-trajectories.webp" data-caption="MHE trajectories on the validation set. Incumbent validation Recognition per generation for each Builder; filled markers: promoted candidates; open: rejected by the gates; crosses: proposals screened out by the checks or the reviewer. S: Shared scaffold; diamond: run with no promotion.">
+            <img src="./static/images/evolving-trajectories.webp" width="1100" height="1031" loading="lazy" alt="Validation Recognition of the incumbent harness over four generations for each student and Builder, with promoted, rejected and screened-out candidates.">
+          </button>
+          <figcaption><strong>Trajectories on the validation set.</strong> Filled markers were promoted, open ones rejected by the gates; crosses were screened out before scoring.</figcaption>
+        </figure>
+        <figure class="figure-card">
+          <button class="zoomable" type="button" data-full="./static/images/construction-transfer.webp" data-caption="Validation gains overstate evaluation gains. Gain of each evolved harness over Shared on validation (item mean over 394 items) and on evaluation (task macro over 5,507 items).">
+            <img src="./static/images/construction-transfer.webp" width="1100" height="961" loading="lazy" alt="Gain of each evolved harness over Shared on validation versus evaluation; evaluation gains are much smaller.">
+          </button>
+          <figcaption><strong>Validation gains overstate evaluation gains.</strong> Each evolved harness&rsquo;s gain over Shared on validation (394 items) and on evaluation (5,507 items).</figcaption>
+        </figure>
+      </div>
+      <aside class="use-note" aria-label="Intended use">
+        <h3>Intended use</h3>
+        <p>Benchmark emotion labels are interpretations of behavior, not measurements of private mental states or clinical conditions. This work does not validate use in diagnosis, employment screening, surveillance or educational assessment. Frames shown on this page come from public research datasets, with on-screen names removed.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Citation -->
+  <section class="section band" id="citation" aria-labelledby="citation-title">
+    <div class="container">
+      <div class="cite-head">
+        <h2 id="citation-title">Citation</h2>
+        <button class="copy-btn" type="button" data-copy="#bibtex">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V5a1 1 0 0 1 1-1h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Copy BibTeX</span>
+        </button>
+      </div>
+<pre class="bibtex"><code id="bibtex">@misc{li2026emoharness,
+  title  = {EmoHarness: Boosting Multimodal Emotion Understanding with Meta-Harness Evolving},
+  author = {Li, Fenghai and Li, Bingxuan and Zhang, Jiawen and Shen, Yifan and Liu, Jiateng and Zhang, Yutong and Guo, Yue},
+  year   = {2026},
+  url    = {https://emo-harness.github.io}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="footer-brand"><img src="./static/images/logo.png" width="28" height="28" alt=""><span><span class="brand-emo">Emo</span><span class="brand-harness">Harness</span></span></p>
+    <p>Correspondence: <a href="mailto:max7@illinois.edu">Fenghai Li</a>, <a href="mailto:bl61@illinois.edu">Bingxuan Li</a> and <a href="mailto:yueg@illinois.edu">Yue Guo</a>.</p>
+    <p>Code under the MIT license at <a href="https://github.com/Emo-Harness/EmoHarness">Emo-Harness/EmoHarness</a>. MME-Emotion, IntentQA and the student models are used under their own terms.</p>
+  </div>
+</footer>
+
+<dialog class="lightbox" aria-label="Enlarged figure">
+  <div class="lightbox-bar">
+    <p class="lightbox-caption"></p>
+    <div class="lightbox-actions">
+      <a class="lightbox-open" href="#" target="_blank" rel="noopener">Open in new tab</a>
+      <button class="lightbox-close" type="button" aria-label="Close figure">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="lightbox-stage"><img alt=""></div>
+</dialog>
+</body>
+</html>
