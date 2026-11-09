@@ -29,7 +29,7 @@
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) { visible[entry.target.id] = entry.isIntersecting; });
       var current = null;
-      Object.keys(byId).forEach(function (id) { if (visible[id] && current === null) { current = id; } });
+      Object.keys(byId).forEach(function (id) { if (visible[id]) { current = id; } });
       links.forEach(function (link) {
         var on = current !== null && link === byId[current];
         link.classList.toggle('active', on);

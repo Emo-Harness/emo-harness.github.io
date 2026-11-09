@@ -13,6 +13,7 @@ static/css/style.css       styles (colors follow the paper's figures)
 static/js/results.js       Table 1 data and the interactive Recognition chart
 static/js/main.js          navigation, the hero condition ladder, tabs, figure lightbox, BibTeX copy
 static/images/             figures exported from the paper (WebP), case-study frames, logo
+static/videos/             MME-Emotion example clips (MP4, faststart) and their WebP posters
 static/pdf/EmoHarness.pdf  the paper
 ```
 

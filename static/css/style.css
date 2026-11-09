@@ -356,6 +356,22 @@ abbr[title] { text-decoration: none; cursor: help; }
 .lightbox-stage { overflow: auto; padding: 16px; flex: 1; min-height: 0; }
 .lightbox-stage img { margin: 0 auto; max-height: calc(94vh - 110px); width: auto; }
 
+/* Example clips */
+.clips { margin-top: 64px; }
+.clips-intro { margin-top: 10px; max-width: 46em; font-size: 15.5px; line-height: 1.75; color: var(--ink-2); }
+.clip-grid { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 24px; }
+.clip { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 10px 12px; }
+.clip video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: contain; background: #11161c; border-radius: var(--radius-sm); }
+.clip-meta { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; line-height: 1.5; }
+.clip-task { font-weight: 700; color: var(--ink); font-size: 13px; }
+.clip-split { border-radius: 999px; padding: 0 7px; font-weight: 600; }
+.clip-split.seen { color: var(--student); background: #eaf1f9; }
+.clip-split.held { color: var(--mhe); background: var(--mhe-tint); }
+.clip-dur { margin-left: auto; color: var(--faint); font-variant-numeric: tabular-nums; }
+.clip-ref { margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+.clip-ref strong { color: var(--ok); }
+.clip-labels { margin-top: 4px; font-size: 12px; line-height: 1.55; color: var(--faint); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .page-nav a { padding: 6px 8px; font-size: 13.5px; }
@@ -372,6 +388,7 @@ abbr[title] { text-decoration: none; cursor: help; }
   .hero-showcase, .overview-grid, .method-grid, .split { grid-template-columns: minmax(0, 1fr); }
   .teaser { position: static; max-width: 520px; }
   .findings { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .clip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .wide-break { display: none; }
 }
 @media (max-width: 680px) {
@@ -408,6 +425,8 @@ abbr[title] { text-decoration: none; cursor: help; }
   .gates div { grid-template-columns: 1fr; gap: 0; }
   .qa-table th, .qa-table td { padding: 8px 6px; font-size: 13px; }
   .figure-card.wide { padding: 10px; }
+  .clips { margin-top: 48px; }
+  .clip-grid { grid-template-columns: minmax(0, 1fr); }
   .cite-head { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) {
