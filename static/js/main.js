@@ -131,6 +131,44 @@
     if (list) { initTabs(list); }
   }
 
+  /* Example clips: the playlist picks the clip in the player; clicking an entry also starts it */
+  function initClips() {
+    var list = document.querySelector('.clip-list');
+    var stage = document.querySelector('.clip-stage');
+    if (!list || !stage) { return; }
+
+    function videoFor(tab) {
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      return panel ? panel.querySelector('video') : null;
+    }
+
+    var controls = initTabs(list, function (selected) {
+      controls.tabs.forEach(function (tab) {
+        var video = videoFor(tab);
+        if (tab !== selected && video && !video.paused) { video.pause(); }
+      });
+    });
+
+    controls.tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var video = videoFor(tab);
+        if (!video) { return; }
+        // On narrow screens the list sits below the player; bring the player back into view.
+        stage.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
+        var started = video.play();
+        if (started && typeof started.catch === 'function') {
+          started.catch(function (error) {
+            // Switching clips mid-load aborts the start, and a browser may refuse to start with
+            // sound; either way the clip stays selected with its play button ready.
+            if (error && error.name !== 'AbortError' && error.name !== 'NotAllowedError') {
+              console.warn('Example clip could not play:', error);
+            }
+          });
+        }
+      });
+    });
+  }
+
   /* Lightbox for figures */
   function initLightbox() {
     var dialog = document.querySelector('.lightbox');
@@ -213,6 +251,7 @@
     initActiveSection();
     initLadder();
     initCaseTabs();
+    initClips();
     initLightbox();
     initCopy();
   }

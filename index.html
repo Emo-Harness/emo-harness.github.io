@@ -17,9 +17,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="./static/css/style.css?v=2">
+  <link rel="stylesheet" href="./static/css/style.css?v=4">
   <script src="./static/js/results.js?v=1" defer></script>
-  <script src="./static/js/main.js?v=2" defer></script>
+  <script src="./static/js/main.js?v=3" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -59,13 +59,13 @@
         </p>
         <h1>Boosting Multimodal Emotion Understanding<br class="wide-break"> with Meta-Harness Evolving</h1>
         <p class="authors">
-          <span>Fenghai Li<sup>1</sup></span>
-          <span>Bingxuan Li<sup>1</sup></span>
-          <span>Jiawen Zhang<sup>2</sup></span>
-          <span>Yifan Shen<sup>1</sup></span>
-          <span>Jiateng Liu<sup>1</sup></span>
-          <span>Yutong Zhang<sup>3</sup></span>
-          <span>Yue Guo<sup>1</sup></span>
+          <span><a href="https://fenghaili.com/">Fenghai Li</a><sup>1</sup></span>
+          <span><a href="https://bingxuanli.com/">Bingxuan Li</a><sup>1</sup></span>
+          <span><a href="https://www.linkedin.com/in/jiawen-zhang042/">Jiawen Zhang</a><sup>2</sup></span>
+          <span><a href="https://shenyifans.github.io/">Yifan Shen</a><sup>1</sup></span>
+          <span><a href="https://lumos-jiateng.github.io/">Jiateng Liu</a><sup>1</sup></span>
+          <span><a href="https://yutongz7.github.io/">Yutong Zhang</a><sup>3</sup></span>
+          <span><a href="https://yueguo-50.github.io/">Yue Guo</a><sup>1</sup></span>
         </p>
         <p class="affiliations">
           <span><sup>1</sup>University of Illinois Urbana-Champaign</span>
@@ -349,56 +349,84 @@
       <div class="clips" id="clips" aria-labelledby="clips-title">
         <h3 id="clips-title">What the evaluation clips look like</h3>
         <p class="clips-intro">Eight MME-Emotion evaluation items, most two to three seconds long. Each asks for the most prominent emotion, sentiment or intent from a fixed label set; play with sound, since the spoken words often decide the answer.</p>
-        <ul class="clip-grid">
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_script03_1_F002.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_script03_1_F002.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">2.1 s</span></p>
-            <p class="clip-ref">Reference <strong>Excited</strong></p>
-            <p class="clip-labels">9 labels: Anger, Sadness, Surprise, Happiness, Excited, Fear, Frustration, Neutral, Other</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_script03_2_M014.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_script03_2_M014.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">1.9 s</span></p>
-            <p class="clip-ref">Reference <strong>Anger</strong></p>
-            <p class="clip-labels">9 labels: Anger, Sadness, Surprise, Happiness, Excited, Fear, Frustration, Neutral, Other</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05M_script02_2_F016.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05M_script02_2_F016.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">6.3 s</span></p>
-            <p class="clip-ref">Reference <strong>Sadness</strong></p>
-            <p class="clip-labels">9 labels: Anger, Sadness, Surprise, Happiness, Excited, Fear, Frustration, Neutral, Other</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_impro08_F008.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_impro08_F008.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">7.2 s</span></p>
-            <p class="clip-ref">Reference <strong>Neutral</strong></p>
-            <p class="clip-labels">9 labels: Anger, Sadness, Surprise, Happiness, Excited, Fear, Frustration, Neutral, Other</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/er_wild_dia_114_utt_1_ch.webp" width="640" height="360"><source src="./static/videos/er_wild_dia_114_utt_1_ch.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">ER-Wild</span><span class="clip-split seen">seen</span><span class="clip-dur">2.6 s</span></p>
-            <p class="clip-ref">Reference <strong>anger</strong></p>
-            <p class="clip-labels">7 labels: anger, happy, neutral, surprise, sad, fear, disgust</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/sa_267466_45.webp" width="480" height="360"><source src="./static/videos/sa_267466_45.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">SA</span><span class="clip-split seen">seen</span><span class="clip-dur">2.4 s</span></p>
-            <p class="clip-ref">Reference <strong>negative</strong></p>
-            <p class="clip-labels">3 labels: positive, negative, neutral</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/noise_er_samplenew3_00009341.webp" width="640" height="360"><source src="./static/videos/noise_er_samplenew3_00009341.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">Noise-ER</span><span class="clip-split held">held out</span><span class="clip-dur">2.0 s</span></p>
-            <p class="clip-ref">Reference <strong>neutral</strong></p>
-            <p class="clip-labels">6 labels: happy, neutral, angry, surprise, sad, worried</p>
-          </li>
-          <li class="clip">
-            <video controls playsinline preload="none" poster="./static/videos/ir_dia_111_utt_7_ch.webp" width="640" height="360"><source src="./static/videos/ir_dia_111_utt_7_ch.mp4" type="video/mp4"></video>
-            <p class="clip-meta"><span class="clip-task">IR</span><span class="clip-split held">held out</span><span class="clip-dur">9.3 s</span></p>
-            <p class="clip-ref">Reference <strong>neutral</strong></p>
-            <p class="clip-labels">8 intents: neutral, questioning, consoling, suggesting, encouraging, agreeing, wishing, acknowledging</p>
-          </li>
-        </ul>
+        <div class="clip-viewer">
+          <div class="clip-stage">
+            <div class="clip-panel" role="tabpanel" id="clip-1" aria-labelledby="clip-tab-1">
+              <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_script03_1_F002.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_script03_1_F002.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">2.1 s</span></p>
+                <p class="clip-ref">Reference <strong>Excited</strong>, one of 9 labels</p>
+                <ul class="clip-labels" aria-label="9 labels"><li>Anger</li><li>Sadness</li><li>Surprise</li><li>Happiness</li><li class="is-ref">Excited</li><li>Fear</li><li>Frustration</li><li>Neutral</li><li>Other</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-2" aria-labelledby="clip-tab-2" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_script03_2_M014.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_script03_2_M014.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">1.9 s</span></p>
+                <p class="clip-ref">Reference <strong>Anger</strong>, one of 9 labels</p>
+                <ul class="clip-labels" aria-label="9 labels"><li class="is-ref">Anger</li><li>Sadness</li><li>Surprise</li><li>Happiness</li><li>Excited</li><li>Fear</li><li>Frustration</li><li>Neutral</li><li>Other</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-3" aria-labelledby="clip-tab-3" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05M_script02_2_F016.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05M_script02_2_F016.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">6.3 s</span></p>
+                <p class="clip-ref">Reference <strong>Sadness</strong>, one of 9 labels</p>
+                <ul class="clip-labels" aria-label="9 labels"><li>Anger</li><li class="is-ref">Sadness</li><li>Surprise</li><li>Happiness</li><li>Excited</li><li>Fear</li><li>Frustration</li><li>Neutral</li><li>Other</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-4" aria-labelledby="clip-tab-4" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/er_lab_Ses05F_impro08_F008.webp" width="640" height="426"><source src="./static/videos/er_lab_Ses05F_impro08_F008.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">ER-Lab</span><span class="clip-split seen">seen</span><span class="clip-dur">7.2 s</span></p>
+                <p class="clip-ref">Reference <strong>Neutral</strong>, one of 9 labels</p>
+                <ul class="clip-labels" aria-label="9 labels"><li>Anger</li><li>Sadness</li><li>Surprise</li><li>Happiness</li><li>Excited</li><li>Fear</li><li>Frustration</li><li class="is-ref">Neutral</li><li>Other</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-5" aria-labelledby="clip-tab-5" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/er_wild_dia_114_utt_1_ch.webp" width="640" height="360"><source src="./static/videos/er_wild_dia_114_utt_1_ch.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">ER-Wild</span><span class="clip-split seen">seen</span><span class="clip-dur">2.6 s</span></p>
+                <p class="clip-ref">Reference <strong>anger</strong>, one of 7 labels</p>
+                <ul class="clip-labels" aria-label="7 labels"><li class="is-ref">anger</li><li>happy</li><li>neutral</li><li>surprise</li><li>sad</li><li>fear</li><li>disgust</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-6" aria-labelledby="clip-tab-6" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/sa_267466_45.webp" width="480" height="360"><source src="./static/videos/sa_267466_45.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">SA</span><span class="clip-split seen">seen</span><span class="clip-dur">2.4 s</span></p>
+                <p class="clip-ref">Reference <strong>negative</strong>, one of 3 labels</p>
+                <ul class="clip-labels" aria-label="3 labels"><li>positive</li><li class="is-ref">negative</li><li>neutral</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-7" aria-labelledby="clip-tab-7" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/noise_er_samplenew3_00009341.webp" width="640" height="360"><source src="./static/videos/noise_er_samplenew3_00009341.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">Noise-ER</span><span class="clip-split held">held out</span><span class="clip-dur">2.0 s</span></p>
+                <p class="clip-ref">Reference <strong>neutral</strong>, one of 6 labels</p>
+                <ul class="clip-labels" aria-label="6 labels"><li>happy</li><li class="is-ref">neutral</li><li>angry</li><li>surprise</li><li>sad</li><li>worried</li></ul>
+              </div>
+            </div>
+            <div class="clip-panel" role="tabpanel" id="clip-8" aria-labelledby="clip-tab-8" hidden>
+              <video controls playsinline preload="none" poster="./static/videos/ir_dia_111_utt_7_ch.webp" width="640" height="360"><source src="./static/videos/ir_dia_111_utt_7_ch.mp4" type="video/mp4"></video>
+              <div class="clip-info">
+                <p class="clip-meta"><span class="clip-task">IR</span><span class="clip-split held">held out</span><span class="clip-dur">9.3 s</span></p>
+                <p class="clip-ref">Reference <strong>neutral</strong>, one of 8 intents</p>
+                <ul class="clip-labels" aria-label="8 intents"><li class="is-ref">neutral</li><li>questioning</li><li>consoling</li><li>suggesting</li><li>encouraging</li><li>agreeing</li><li>wishing</li><li>acknowledging</li></ul>
+              </div>
+            </div>
+          </div>
+          <div class="clip-list" role="tablist" aria-label="Example clips" aria-orientation="vertical">
+            <button type="button" role="tab" id="clip-tab-1" aria-controls="clip-1" aria-selected="true" tabindex="0"><img src="./static/videos/er_lab_Ses05F_script03_1_F002.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">ER-Lab</span><span class="clip-tab-ref"><span class="sr-only">reference </span>Excited</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">2.1 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-2" aria-controls="clip-2" aria-selected="false" tabindex="-1"><img src="./static/videos/er_lab_Ses05F_script03_2_M014.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">ER-Lab</span><span class="clip-tab-ref"><span class="sr-only">reference </span>Anger</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">1.9 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-3" aria-controls="clip-3" aria-selected="false" tabindex="-1"><img src="./static/videos/er_lab_Ses05M_script02_2_F016.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">ER-Lab</span><span class="clip-tab-ref"><span class="sr-only">reference </span>Sadness</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">6.3 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-4" aria-controls="clip-4" aria-selected="false" tabindex="-1"><img src="./static/videos/er_lab_Ses05F_impro08_F008.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">ER-Lab</span><span class="clip-tab-ref"><span class="sr-only">reference </span>Neutral</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">7.2 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-5" aria-controls="clip-5" aria-selected="false" tabindex="-1"><img src="./static/videos/er_wild_dia_114_utt_1_ch.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">ER-Wild</span><span class="clip-tab-ref"><span class="sr-only">reference </span>anger</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">2.6 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-6" aria-controls="clip-6" aria-selected="false" tabindex="-1"><img src="./static/videos/sa_267466_45.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">SA</span><span class="clip-tab-ref"><span class="sr-only">reference </span>negative</span></span><span class="clip-tab-side"><span class="clip-split seen">seen</span><span class="clip-dur">2.4 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-7" aria-controls="clip-7" aria-selected="false" tabindex="-1"><img src="./static/videos/noise_er_samplenew3_00009341.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">Noise-ER</span><span class="clip-tab-ref"><span class="sr-only">reference </span>neutral</span></span><span class="clip-tab-side"><span class="clip-split held">held out</span><span class="clip-dur">2.0 s</span></span></button>
+            <button type="button" role="tab" id="clip-tab-8" aria-controls="clip-8" aria-selected="false" tabindex="-1"><img src="./static/videos/ir_dia_111_utt_7_ch.webp" alt="" width="80" height="50" loading="lazy"><span class="clip-tab-text"><span class="clip-tab-task">IR</span><span class="clip-tab-ref"><span class="sr-only">reference </span>neutral</span></span><span class="clip-tab-side"><span class="clip-split held">held out</span><span class="clip-dur">9.3 s</span></span></button>
+          </div>
+        </div>
         <p class="fine">Seen types were used during harness construction; held-out types were not. Clips come from the public MME-Emotion benchmark and are shown as distributed.</p>
       </div>
     </div>
