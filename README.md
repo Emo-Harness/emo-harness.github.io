@@ -22,8 +22,9 @@ branch as is (`.nojekyll` turns Jekyll off).
 
 ## Updating
 
-- **Paper:** replace `static/pdf/EmoHarness.pdf`. When it moves to arXiv, point
-  the Paper button in `index.html` at the arXiv link and update the BibTeX block.
+- **Paper:** the Paper button and the BibTeX in `index.html` point at arXiv
+  [2611.11994](https://arxiv.org/abs/2611.11994). `static/pdf/EmoHarness.pdf` is a
+  local copy of v1; replace it after a new arXiv version so both match.
 - **Numbers:** the chart reads `STUDENTS` in `static/js/results.js`; the IntentQA
   table and the text quote numbers directly in `index.html`.
 - **Figures:** re-export from the paper's PDF figures, for example
